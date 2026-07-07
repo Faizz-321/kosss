@@ -10,15 +10,21 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
-// Konfigurasi Multer untuk upload gambar
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, 'public/uploads'));
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'kosss_uploads',
+    allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
   },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
 });
 const upload = multer({ storage: storage });
 
@@ -94,7 +100,7 @@ app.post('/api/rooms', upload.fields([{ name: 'images', maxCount: 7 }, { name: '
   
   let image = req.body.image || '[]';
   if (req.files && req.files['images']) {
-    const urls = req.files['images'].map(file => `http://localhost:5000/uploads/${file.filename}`);
+    const urls = req.files['images'].map(file => file.path); // Cloudinary returns URL in file.path
     image = JSON.stringify(urls);
   } else if (req.body.image && !req.body.image.startsWith('[')) {
     image = JSON.stringify([req.body.image]);
@@ -102,7 +108,7 @@ app.post('/api/rooms', upload.fields([{ name: 'images', maxCount: 7 }, { name: '
   
   let location_images = req.body.location_images || '[]';
   if (req.files && req.files['location_images']) {
-    const locUrls = req.files['location_images'].map(file => `http://localhost:5000/uploads/${file.filename}`);
+    const locUrls = req.files['location_images'].map(file => file.path);
     location_images = JSON.stringify(locUrls);
   }
   
@@ -249,3 +255,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server berjalan di http://localhost:${PORT}`);
 });
+
+module.exports = app;
