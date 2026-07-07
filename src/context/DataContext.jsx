@@ -7,7 +7,7 @@ export const useData = () => useContext(DataContext);
 export const DataProvider = ({ children }) => {
   const [rooms, setRooms] = useState([]);
   const [bookings, setBookings] = useState([]);
-  const API_URL = 'http://localhost:5000/api';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
   const [transactions, setTransactions] = useState([]);
 

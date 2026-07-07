@@ -3,6 +3,7 @@ const mysql = require('mysql2');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
 app.use(cors());
@@ -21,12 +22,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// Koneksi ke Database XAMPP
+// Koneksi ke Database
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root', // default XAMPP user
-  password: '', // default XAMPP password is empty
-  database: 'kost_ezcoo'
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || 'kost_ezcoo',
+  port: process.env.DB_PORT || 3306
 });
 
 db.connect((err) => {
