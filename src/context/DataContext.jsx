@@ -13,7 +13,7 @@ export const DataProvider = ({ children }) => {
 
   const fetchRooms = async () => {
     try {
-      const res = await fetch(`${API_URL}/rooms`);
+      const res = await fetch(`${API_URL}/rooms`, { cache: 'no-store' });
       if (res.ok) setRooms(await res.json());
     } catch (error) {
       console.error('Failed to fetch rooms', error);
@@ -22,7 +22,7 @@ export const DataProvider = ({ children }) => {
 
   const fetchBookings = async () => {
     try {
-      const res = await fetch(`${API_URL}/bookings`);
+      const res = await fetch(`${API_URL}/bookings`, { cache: 'no-store' });
       if (res.ok) setBookings(await res.json());
     } catch (error) {
       console.error('Failed to fetch bookings', error);
@@ -31,7 +31,7 @@ export const DataProvider = ({ children }) => {
 
   const fetchTransactions = async () => {
     try {
-      const res = await fetch(`${API_URL}/transactions`);
+      const res = await fetch(`${API_URL}/transactions`, { cache: 'no-store' });
       if (res.ok) setTransactions(await res.json());
     } catch (error) {
       console.error('Failed to fetch transactions', error);

@@ -28,6 +28,15 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage: storage });
 
+// Prevent caching for all API routes (crucial for Vercel/serverless)
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Surrogate-Control', 'no-store');
+  next();
+});
+
 // Koneksi ke Database
 const db = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',

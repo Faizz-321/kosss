@@ -20,8 +20,8 @@ const Finance = () => {
   }
 
   // Calculate overall totals
-  const overallIncome = (transactions || []).filter(t => t.type === 'Pemasukan').reduce((sum, t) => sum + t.amount, 0);
-  const overallExpense = (transactions || []).filter(t => t.type === 'Pengeluaran').reduce((sum, t) => sum + t.amount, 0);
+  const overallIncome = (transactions || []).filter(t => t.type === 'Pemasukan').reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+  const overallExpense = (transactions || []).filter(t => t.type === 'Pengeluaran').reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
   const overallBalance = overallIncome - overallExpense;
 
   // Filter transactions by selected month & year
@@ -33,14 +33,14 @@ const Finance = () => {
   }, [transactions, selectedMonth, selectedYear]);
 
   // Calculate monthly totals
-  const monthlyIncome = monthlyTransactions.filter(t => t.type === 'Pemasukan').reduce((sum, t) => sum + t.amount, 0);
-  const monthlyExpense = monthlyTransactions.filter(t => t.type === 'Pengeluaran').reduce((sum, t) => sum + t.amount, 0);
+  const monthlyIncome = monthlyTransactions.filter(t => t.type === 'Pemasukan').reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+  const monthlyExpense = monthlyTransactions.filter(t => t.type === 'Pengeluaran').reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
   const monthlyBalance = monthlyIncome - monthlyExpense;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newTx.amount || newTx.amount <= 0) return alert('Jumlah uang tidak valid!');
-    addTransaction({ ...newTx, amount: parseInt(newTx.amount) });
+    addTransaction({ ...newTx, amount: parseFloat(newTx.amount) });
     setShowModal(false);
     setNewTx({ type: 'Pemasukan', amount: '', description: '' });
   };
