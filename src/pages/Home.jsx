@@ -37,7 +37,7 @@ const Home = () => {
     });
 
     // Format pesan WhatsApp
-    const message = `Halo Admin Kos Premium, saya ${user.name} bermaksud untuk mem-booking kamar: *${selectedRoom.name}*. Apakah kamar tersebut bisa segera diproses? Terima kasih.`;
+    const message = `Halo Admin KOS FAIZ, saya ${user.name} bermaksud untuk mem-booking kamar: *${selectedRoom.name}*. Apakah kamar tersebut bisa segera diproses? Terima kasih.`;
     const waUrl = `https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(message)}`;
 
     // Buka WhatsApp di tab baru

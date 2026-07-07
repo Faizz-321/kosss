@@ -16,13 +16,13 @@ const Navbar = () => {
       <div className="container">
         <Link to="/" className="nav-brand">
           <Home className="text-primary" />
-          <span>Kos</span>Premium
+          <span>KOS</span> FAIZ
         </Link>
         <div className="nav-links">
           <Link to="/" className="nav-link">Beranda</Link>
           {(!user || user.role !== 'admin') && (
             <a 
-              href="https://wa.me/6287762122507?text=Halo%20Admin%20Kos%20Premium%2C%20saya%20ingin%20bertanya-tanya%20mengenai%20informasi%20kos.%20Mohon%20bantuannya%2C%20terima%20kasih!"
+              href="https://wa.me/6287762122507?text=Halo%20Admin%20KOS%20FAIZ%2C%20saya%20ingin%20bertanya-tanya%20mengenai%20informasi%20kos.%20Mohon%20bantuannya%2C%20terima%20kasih!"
               target="_blank" 
               rel="noreferrer"
               className="nav-link flex items-center gap-1 text-accent hover:text-primary transition-colors"
