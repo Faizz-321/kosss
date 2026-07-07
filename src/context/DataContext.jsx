@@ -57,6 +57,15 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const deleteTransaction = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/transactions/${id}`, { method: 'DELETE' });
+      if (res.ok) fetchTransactions();
+    } catch (error) {
+      console.error('Failed to delete transaction', error);
+    }
+  };
+
   const addRoom = async (roomData) => {
     try {
       const isFormData = roomData instanceof FormData;
@@ -149,7 +158,7 @@ export const DataProvider = ({ children }) => {
     <DataContext.Provider value={{ 
       rooms, addRoom, deleteRoom, 
       bookings, addBooking, updateBookingStatus, deleteBooking, updateUserName,
-      transactions, addTransaction, fetchTransactions,
+      transactions, addTransaction, deleteTransaction, fetchTransactions,
       refreshData: () => { fetchRooms(); fetchBookings(); fetchTransactions(); }
     }}>
       {children}

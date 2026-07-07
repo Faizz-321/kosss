@@ -257,6 +257,14 @@ app.post('/api/transactions', (req, res) => {
   });
 });
 
+app.delete('/api/transactions/:id', (req, res) => {
+  const { id } = req.params;
+  db.query('DELETE FROM transactions WHERE id = ?', [id], (err, result) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ success: true });
+  });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server berjalan di http://localhost:${PORT}`);

@@ -2,11 +2,11 @@ import { useState, useMemo } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useData } from '../context/DataContext';
-import { DollarSign, PlusCircle, ArrowDownCircle, ArrowUpCircle, XCircle } from 'lucide-react';
+import { DollarSign, PlusCircle, ArrowDownCircle, ArrowUpCircle, XCircle, Trash2 } from 'lucide-react';
 
 const Finance = () => {
   const { user } = useAuth();
-  const { transactions, addTransaction } = useData();
+  const { transactions, addTransaction, deleteTransaction } = useData();
 
   const [showModal, setShowModal] = useState(false);
   const [newTx, setNewTx] = useState({ type: 'Pemasukan', amount: '', description: '' });
@@ -140,6 +140,7 @@ const Finance = () => {
                   <th className="mb-2 p-2">Jenis</th>
                   <th className="mb-2 p-2">Keterangan</th>
                   <th className="mb-2 p-2 text-right">Jumlah</th>
+                  <th className="mb-2 p-2 text-center">Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -154,6 +155,20 @@ const Finance = () => {
                     <td className="p-2">{t.description}</td>
                     <td className={`p-2 text-right ${t.type === 'Pemasukan' ? 'text-success' : 'text-danger'}`}>
                       {t.type === 'Pemasukan' ? '+' : '-'} Rp {t.amount.toLocaleString('id-ID')}
+                    </td>
+                    <td className="p-2 text-center">
+                      <button 
+                        onClick={() => {
+                          if (window.confirm('Yakin ingin menghapus transaksi ini? Saldo akan otomatis disesuaikan.')) {
+                            deleteTransaction(t.id);
+                          }
+                        }}
+                        className="text-danger"
+                        style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '0.5rem' }}
+                        title="Hapus Transaksi"
+                      >
+                        <Trash2 size={18} />
+                      </button>
                     </td>
                   </tr>
                 ))}
