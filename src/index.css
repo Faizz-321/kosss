@@ -354,3 +354,63 @@ p {
   color: var(--text-muted);
   margin-bottom: 1rem;
 }
+
+/* ========================================================================= */
+/* RESPONSIVE / MOBILE DESIGN (Max-width 768px) */
+/* ========================================================================= */
+@media (max-width: 768px) {
+  /* Global */
+  .container {
+    padding: 0 1rem;
+  }
+  
+  /* Navbar adjustments */
+  .navbar .container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+  .nav-links .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  /* Table responsiveness (Scrollable horizontally) */
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--glass-border);
+  }
+  
+  /* Make sure table itself is wide enough to not squish text */
+  table {
+    min-width: 600px;
+    width: 100%;
+  }
+
+  /* Typography */
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  
+  /* Hero Section spacing */
+  .mt-8 { margin-top: 1.5rem; }
+  .mb-8 { margin-bottom: 1.5rem; }
+
+  /* Modals on mobile */
+  .modal-content {
+    padding: 1.5rem;
+    margin: 1rem;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+
